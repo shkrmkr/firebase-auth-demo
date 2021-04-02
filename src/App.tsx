@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
-import Spinner from 'react-spinners/ScaleLoader';
 import { Alert } from './components/Alert';
 import { RouteWithAuthState } from './components/RouteWithAuthState';
+import { Spinner } from './components/Spinner';
 import { auth } from './firebase';
 import { Dashboard } from './pages/Dashboard';
 import { Login } from './pages/Login';
@@ -27,7 +27,10 @@ export const App = () => {
   if (isLoading) {
     return (
       <div className="grid h-screen place-content-center">
-        <Spinner height={100} width={10} margin={5} />
+        <Spinner
+          twColorClass="text-blue-600"
+          twHeightAndWidthClass="h-64 w-64"
+        />
       </div>
     );
   }
@@ -42,17 +45,17 @@ export const App = () => {
           path="/"
           component={Dashboard}
         />
+        <RouteWithAuthState
+          type="private"
+          path="/update-profile"
+          component={ProfileUpdate}
+        />
         <RouteWithAuthState type="auth" path="/signup" component={Signup} />
         <RouteWithAuthState type="auth" path="/login" component={Login} />
         <RouteWithAuthState
           type="auth"
           path="/reset-password"
           component={PasswordReset}
-        />
-        <RouteWithAuthState
-          type="private"
-          path="/update-profile"
-          component={ProfileUpdate}
         />
       </Switch>
     </BrowserRouter>

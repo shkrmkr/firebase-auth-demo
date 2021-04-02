@@ -4,13 +4,13 @@ import React from 'react';
 interface Props {
   twHeightAndWidthClass?: string;
   twColorClass?: string;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 export const Spinner = ({
   twHeightAndWidthClass,
   twColorClass,
-  isLoading,
+  isLoading = true,
 }: Props) => {
   return (
     <span className={cn('h-5 w-5', twHeightAndWidthClass)}>

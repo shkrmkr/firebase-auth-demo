@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import create, { State } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-interface Alert {
+export interface Alert {
   id: string;
   type: 'success' | 'warning' | 'error';
   message: string;

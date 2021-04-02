@@ -1,58 +1,44 @@
-import cn from 'classnames';
 import React from 'react';
 import { IconType } from 'react-icons';
-import { VscCheck, VscClose, VscError, VscWarning } from 'react-icons/vsc';
+import { VscCheck, VscError, VscWarning } from 'react-icons/vsc';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useAlertStore } from '../stores';
+import { AlertCard } from './AlertCard';
 
 export const Alert = () => {
-  const { alerts, removeAlert } = useAlertStore();
+  const { alerts } = useAlertStore();
 
   return (
-    <div className="fixed z-50 w-11/12 max-w-md space-y-5 bottom-5">
+    <TransitionGroup className="fixed z-50 w-11/12 max-w-md space-y-5 bottom-5">
       {alerts.map((alert) => {
-        let Icon: IconType;
+        let icon: IconType;
         let bgColor: string;
 
         switch (alert.type) {
           case 'error':
-            Icon = VscError;
+            icon = VscError;
             bgColor = 'bg-red-300';
             break;
           case 'success':
-            Icon = VscCheck;
+            icon = VscCheck;
             bgColor = 'bg-green-300';
             break;
           case 'warning':
-            Icon = VscWarning;
+            icon = VscWarning;
             bgColor = 'bg-yellow-300';
         }
 
         return (
-          <div
+          <CSSTransition
+            timeout={500}
             key={alert.id}
-            className={cn(
-              bgColor,
-              'text-gray-600 bg-opacity-90 hover:bg-opacity-100 transition transform flex items-center relative sm:rounded-r-sm sm:pl-5',
-            )}
+            classNames="alert-item"
+            unmountOnExit
           >
-            <div className="m-3 sm:m-5">
-              <Icon
-                className="text-xl fill-current sm:text-2xl"
-                title={`${alert.type} icon`}
-              />
-            </div>
-            <p className="flex-1 py-5 overflow-hidden overflow-ellipsis">
-              {alert.message}
-            </p>
-            <button
-              onClick={() => removeAlert(alert.id)}
-              className="self-start p-3 focus-ring"
-            >
-              <VscClose size={20} />
-            </button>
-          </div>
+            <AlertCard alert={alert} bgColor={bgColor} icon={icon} />
+          </CSSTransition>
         );
       })}
-    </div>
+    </TransitionGroup>
   );
 };

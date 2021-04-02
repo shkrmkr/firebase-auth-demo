@@ -7,3 +7,17 @@
     @apply focus:outline-none focus:ring-2 focus:ring-offset-1;
   }
 }
+
+@layer utilities {
+  .alert-item-enter {
+    @apply transform -translate-x-full;
+  }
+
+  .alert-item-enter-active {
+    @apply transition-transform duration-500 ease-in transform translate-x-0;
+  }
+
+  .alert-item-exit-active {
+    @apply transition-transform duration-500 ease-out transform -translate-x-full;
+  }
+}
